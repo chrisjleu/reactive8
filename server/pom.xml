@@ -44,7 +44,7 @@
                 </executions>
                 <configuration>
                     <redeploy>true</redeploy>
-                    <appId>server</appId>
+                    <appId>${project.name}</appId>
                     <verticle>${project.groupId}.${project.name}.MainVerticle</verticle>
                 </configuration>
             </plugin>
