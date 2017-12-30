@@ -24,14 +24,28 @@ The following program arguments are required:
 
 `run io.reactive8.server.MainVerticle -conf server/conf.json`
 
+## Other start/stop options
+### List all started Vertx applications
+`java -jar server/target/server-1.0.0-SNAPSHOT.jar stop`
+
+Pass the "app ID" (UUID) as an argument to `stop` to stop an application.
+
+### Start the application in debug mode
+`mvn vertx:debug -f server/pom.xml`
+
+Connect to this with an IDE debugger on the default port (5005).
+
 ## Notes
 * One of the goals for this starter application was to have an easy way to build and package the entire application.
 There is some challenge there in combining the build and packaging of the frontend application with the backend.
 This is achieved thanks to [Apache Maven](https://maven.apache.org/) and specifically a combination of the 
 `vertx-maven-plugin` and `frontend-maven-plugin` plugins (see references below).
-The trick is to ensure Maven packages up the client/frontend application following the [WebJars](http://www.webjars.org/) 
-convention as `vertx-maven-plugin` is looking out for these types of jars to unpack to a location that Vert.x can serve 
-up at runtime. The following stanza in `client/pom.xml` is crucial for two reasons:
+
+The trick is to ensure `frontend-maven-plugin` packages up the client/frontend application in accordance with the
+ [WebJars](http://www.webjars.org/) convention since `vertx-maven-plugin` is looking out for these types of jars to 
+ unpack to a location that Vert.x can serve up at runtime.
+
+The following stanza in `client/pom.xml` is crucial for two reasons:
 
 ```xml
     <execution>
