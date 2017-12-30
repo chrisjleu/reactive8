@@ -16,6 +16,7 @@ public class MainVerticle extends AbstractVerticle {
         StaticHandler staticHandler = StaticHandler.create().setIndexPage("client/index.html");
 
         router.route("/assets/*").handler(staticHandler);
+        router.route("/api/*").handler(request -> request.response().end("REST API"));
         router.route("/").handler(request -> request.reroute("/assets/"));
 
         vertx.createHttpServer()
