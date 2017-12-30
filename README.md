@@ -36,16 +36,19 @@ Pass the "app ID" (UUID) as an argument to `stop` to stop an application.
 Connect to this with an IDE debugger on the default port (5005).
 
 ## Notes
-* One of the goals for this starter application was to have an easy way to build and package the entire application.
+One of the goals for this starter application was to have an easy way to build and package the entire application.
 There is some challenge there in combining the build and packaging of the frontend application with the backend.
 This is achieved thanks to [Apache Maven](https://maven.apache.org/) and specifically a combination of the 
-`vertx-maven-plugin` and `frontend-maven-plugin` plugins (see references below).
+`vertx-maven-plugin` and `frontend-maven-plugin` plugins (see references below). The trick is to:
 
-The trick is to ensure `frontend-maven-plugin` packages up the client/frontend application in accordance with the
- [WebJars](http://www.webjars.org/) convention since `vertx-maven-plugin` is looking out for these types of jars to 
- unpack to a location that Vert.x can serve up at runtime.
+1. Instruct `frontend-maven-plugin` to package the client/frontend application in accordance with [WebJars](http://www.webjars.org/) 
+conventions so that `vertx-maven-plugin` can identify it as such and unpack to a location that  Vert.x can serve up at runtime. 
+In fact `vertx-maven-plugin` imposes the strict requirement that only files matching the following pattern are unpacked an relocated: 
+`".*META-INF/resources/webjars/([^/]+)/([^/]+)/.*"`. See the [source code](https://github.com/fabric8io/vertx-maven-plugin/blob/master/src/main/java/io/fabric8/vertx/maven/plugin/utils/WebJars.java) if curious.
+1. Ensure that supporting assets are referenced correctly from `index.html`.
+1. Configure [Vertx's web root](http://vertx.io/docs/vertx-web/java/#_serving_static_resources) and where to find `index.html`.
 
-The following stanza in `client/pom.xml` is crucial for two reasons:
+The following stanza in `client/pom.xml` is crucial for achieving the first two points above:
 
 ```xml
     <execution>
@@ -60,8 +63,8 @@ The following stanza in `client/pom.xml` is crucial for two reasons:
     </execution>
 ```
 
-1. `-op` ensures the resulting JAR conforms to the WebJars convention of having all "assets" in `/META-INF/resources`. In fact `vertx-maven-plugin` imposes the strict requirement that only files matching the following pattern are unpacked to [Vertx's web root](http://vertx.io/docs/vertx-web/java/#_serving_static_resources): `".*META-INF/resources/webjars/([^/]+)/([^/]+)/.*"` See the [source code](https://github.com/fabric8io/vertx-maven-plugin/blob/master/src/main/java/io/fabric8/vertx/maven/plugin/utils/WebJars.java) if curious.
-1. `--base-href` ensures that CSS Javascript and other assets are referenced correctly from `index.html`. Later it was necessary to configure correctly Vertx's web root to expect where to find `index.html` and other static static resources.
+1. `-op` ensures the resulting JAR conforms to the WebJars convention of having all "assets" in `/META-INF/resources`.
+1. `--base-href` ensures that Stylesheets, Javascript and other static assets are referenced correctly from `index.html`.
 
 ## References
 * [A minimalist guide to building spring boot angular 5 applications](https://shekhargulati.com/2017/11/08/a-minimalist-guide-to-building-spring-boot-angular-5-applications/): 
