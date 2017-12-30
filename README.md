@@ -7,6 +7,7 @@ An [opnionated](https://stackoverflow.com/questions/802050/what-is-opinionated-s
 1. Maven to build, package and run as an executable (fat) JAR.
 
 ### Coming soon
+1. Maven archetype to generate a customized version of this starter kit.
 1. Reactive frontend with websockets
 
 ## Getting started
@@ -69,6 +70,6 @@ The following stanza in `client/pom.xml` is crucial for achieving the first two 
 ## References
 * [A minimalist guide to building spring boot angular 5 applications](https://shekhargulati.com/2017/11/08/a-minimalist-guide-to-building-spring-boot-angular-5-applications/): 
 Much of the initial setup work was adapted from an attempt to do something similar with Angular and Spring Boot in this article.
-* [Building a real-time web app with Angular/Ngrx and Vert.x](https://medium.com/@benorama/building-a-realtime-web-app-with-angular-ngrx-and-vert-x-a5381c0397a1) follows a similar directory layout with the split between client/server (frontend/backend) modules. The article is less instructive but there is a code repository for reference.
+* [Building a real-time web app with Angular/Ngrx and Vert.x](https://medium.com/@benorama/building-a-realtime-web-app-with-angular-ngrx-and-vert-x-a5381c0397a1) follows a similar directory layout with the split between client/server (frontend/backend) modules. The article is less instructive and [no instructions for how to start both modules as a single application](https://github.com/benorama/ngrx-realtime-app#running-the-apps-locally).
 * [vertx-maven-plugin](https://mvnrepository.com/artifact/io.fabric8/vertx-maven-plugin) (VMP) and [documentation](https://vmp.fabric8.io/).
 * [frontend-maven-plugin](https://mvnrepository.com/artifact/com.github.eirslett/frontend-maven-plugin) and [documentation on Github](https://github.com/eirslett/frontend-maven-plugin).
